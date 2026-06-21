@@ -27,6 +27,13 @@ const ICONS = {
 
 const CLOSED_TABS_KEY = "fruitTabCards:closedTabs";
 const MAX_CLOSED_TABS = 80;
+const REFRESH_INTERVAL_MS = 10 * 60 * 1000;
+const FILTER_LABELS = {
+  all: "全部",
+  recommended: "建议关闭",
+  duplicate: "重复",
+  bookmarked: "已收藏"
+};
 
 const state = {
   tabs: [],
@@ -258,26 +265,39 @@ function formatMemory(bytes) {
   return `${Math.max(1, Math.round(bytes / 1024 ** 2))}MB`;
 }
 
+function getLastAccessed(tab) {
+  const lastAccessed = Number(tab.lastAccessed);
+  return Number.isFinite(lastAccessed) && lastAccessed > 0 ? lastAccessed : Date.now();
+}
+
 function getDuplicates() {
   const byUrl = new Map();
   for (const tab of state.tabs) {
     const key = normalizedUrl(tab.url);
     if (!key) continue;
-    byUrl.set(key, [...(byUrl.get(key) || []), tab.id]);
+    byUrl.set(key, [...(byUrl.get(key) || []), tab]);
   }
 
   const duplicates = new Set();
-  for (const ids of byUrl.values()) {
-    if (ids.length > 1) ids.forEach((id) => duplicates.add(id));
+  for (const tabs of byUrl.values()) {
+    if (tabs.length <= 1) continue;
+    const keeper = [...tabs].sort((a, b) => {
+      if (a.active !== b.active) return a.active ? -1 : 1;
+      return getLastAccessed(b) - getLastAccessed(a);
+    })[0];
+
+    for (const tab of tabs) {
+      if (tab.id !== keeper.id) duplicates.add(tab.id);
+    }
   }
   return duplicates;
 }
 
 function getTabModel(tab, duplicates = getDuplicates()) {
   const group = state.groups.find((item) => item.id === tab.groupId);
-  const firstSeen = state.meta[tab.id]?.firstSeen;
+  const firstSeen = getLastAccessed(tab);
   const memory = state.memoryByTab.get(tab.id);
-  const hoursOpen = (Date.now() - (Number(firstSeen) || Date.now())) / 3600000;
+  const hoursOpen = (Date.now() - firstSeen) / 3600000;
   const duplicate = duplicates.has(tab.id);
   const recommended = !tab.active && (duplicate || tab.discarded || hoursOpen >= 4 || (memory && memory > 450 * 1024 * 1024));
 
@@ -293,13 +313,22 @@ function getTabModel(tab, duplicates = getDuplicates()) {
 }
 
 function filteredTabs() {
+  return groupScopedTabs().filter(matchesCurrentFilter);
+}
+
+function groupScopedTabs() {
   return scopedTabs().filter((tab) =>
-    state.filter === "all" ||
-    (state.filter === "active" && tab.active) ||
+    state.groupFilter === "all" ||
+    (state.groupFilter === "-1" && tab.groupId === -1) ||
+    String(tab.groupId) === state.groupFilter
+  );
+}
+
+function matchesCurrentFilter(tab) {
+  return state.filter === "all" ||
     (state.filter === "recommended" && tab.recommended) ||
     (state.filter === "duplicate" && tab.duplicate) ||
-    (state.filter === "bookmarked" && tab.bookmarked)
-  );
+    (state.filter === "bookmarked" && tab.bookmarked);
 }
 
 function scopedTabs() {
@@ -318,16 +347,8 @@ function scopedTabs() {
 }
 
 function renderFilterCounts(tabs) {
-  const labels = {
-    all: "全部",
-    active: "Active",
-    recommended: "建议关闭",
-    duplicate: "重复",
-    bookmarked: "已收藏"
-  };
   const counts = {
     all: tabs.length,
-    active: tabs.filter((tab) => tab.active).length,
     recommended: tabs.filter((tab) => tab.recommended).length,
     duplicate: tabs.filter((tab) => tab.duplicate).length,
     bookmarked: tabs.filter((tab) => tab.bookmarked).length
@@ -335,7 +356,8 @@ function renderFilterCounts(tabs) {
 
   els.filters.querySelectorAll("[data-filter]").forEach((button) => {
     const filter = button.dataset.filter;
-    button.textContent = `${labels[filter]}（${counts[filter] ?? 0}）`;
+    button.textContent = `${FILTER_LABELS[filter]}（${counts[filter] ?? 0}）`;
+    button.classList.toggle("active", state.filter === filter);
   });
 }
 
@@ -343,7 +365,7 @@ function render() {
   const tabs = filteredTabs();
 
   renderSummaryStats();
-  renderGroupList(tabs);
+  renderGroupList(scopedTabs());
   renderBoard(tabs);
   renderCompact(tabs);
   renderClosedTabs();
@@ -365,7 +387,7 @@ function renderSummaryStats() {
   els.groupCount.textContent = state.groups.length + state.draftGroups.length;
   els.closedCount.textContent = state.closedTabs.length;
 
-  renderFilterCounts(scopedTabs());
+  renderFilterCounts(groupScopedTabs());
 }
 
 function updateViewState() {
@@ -437,6 +459,7 @@ function renderGroupListActions(item) {
 }
 
 function renderBoard(tabs) {
+  const showEmptyGroups = state.filter === "all";
   const lanes = [
     { id: -1, title: "未分组", color: "grey", tabs: tabs.filter((tab) => tab.groupId === -1) },
     ...state.groups.map((group) => ({
@@ -449,7 +472,10 @@ function renderBoard(tabs) {
       tabs: [],
       draft: true
     }))
-  ];
+  ].filter((lane) =>
+    (state.groupFilter === "all" || String(lane.id) === state.groupFilter) &&
+    (showEmptyGroups || lane.tabs.length > 0)
+  );
 
   els.cardBoard.innerHTML = lanes.map((lane) => `
     <section class="lane ${state.collapsedGroups.has(String(lane.id)) ? "collapsed" : ""} ${state.groupFilter === String(lane.id) ? "selected" : ""} ${lane.draft ? "draft-drop" : ""}" data-group-id="${lane.id}">
@@ -589,7 +615,7 @@ function renderFavicon(tab) {
 
 function renderTabBadges(tab) {
   return `
-        ${tab.active ? `<span class="badge active">Active</span>` : ""}
+        ${tab.active ? `<span class="badge active">当前页面</span>` : ""}
         ${tab.recommended ? `<span class="badge close">建议关闭</span>` : ""}
         ${tab.duplicate ? `<span class="badge dup">重复 Tab</span>` : ""}
         ${tab.bookmarked ? `<span class="badge bookmark">已收藏</span>` : ""}
@@ -651,7 +677,7 @@ function updateLaneCounts() {
 }
 
 function updateGroupListCounts() {
-  const tabs = filteredTabs();
+  const tabs = scopedTabs();
   const counts = new Map();
   for (const tab of tabs) counts.set(tab.groupId, (counts.get(tab.groupId) || 0) + 1);
 
@@ -670,6 +696,11 @@ function updateGroupListCounts() {
 }
 
 function syncAfterLocalTabChange() {
+  if (state.filter !== "all") {
+    render();
+    return;
+  }
+
   renderSummaryStats();
   updateGroupListCounts();
   updateLaneCounts();
@@ -1191,3 +1222,7 @@ setSidebarCollapsed(state.sidebarCollapsed);
 refresh().catch((error) => {
   document.body.innerHTML = `<main class="page"><section class="app"><div class="main"><div class="hero"><div><h1>无法加载标签页</h1><p class="subtitle">${escapeHtml(error.message)}</p></div></div></div></section></main>`;
 });
+
+setInterval(() => {
+  refresh().catch(() => undefined);
+}, REFRESH_INTERVAL_MS);

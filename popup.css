@@ -179,12 +179,9 @@ select,
 .brand-logo {
   width: 34px;
   height: 34px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--accent), var(--danger));
-  border-radius: 10px;
+  display: block;
+  flex: 0 0 auto;
+  border-radius: 11px;
   box-shadow: 0 10px 22px rgba(251, 86, 7, .24);
 }
 
@@ -297,7 +294,7 @@ select,
   justify-content: center;
 }
 
-.app.sidebar-collapsed .brand-main > div:not(.brand-logo),
+.app.sidebar-collapsed .brand-main > div,
 .app.sidebar-collapsed .search,
 .app.sidebar-collapsed .stats,
 .app.sidebar-collapsed .section-title,
