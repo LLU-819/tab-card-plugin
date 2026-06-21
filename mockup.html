@@ -1,0 +1,1686 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chrome Tab Cards Mockup</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --chrome: #f1f3f4;
+      --chrome-2: #e8eaed;
+      --panel: #ffffff;
+      --panel-2: #f8fafc;
+      --ink: #202124;
+      --text: #2f3642;
+      --muted: #687385;
+      --subtle: #9aa0a6;
+      --line: #e5e8ef;
+      --line-2: #d2d8e2;
+      --primary: #0077b6;
+      --primary-soft: #caf0f8;
+      --accent: #00b4d8;
+      --success: #008f9f;
+      --success-soft: #dbf7fb;
+      --warning: #00b4d8;
+      --warning-soft: #e2f9fd;
+      --danger: #d94b5f;
+      --danger-soft: #ffe9ed;
+      --shadow: 0 20px 56px rgba(60, 64, 67, .12);
+      --soft-shadow: 0 1px 3px rgba(60, 64, 67, .08), 0 8px 24px rgba(60, 64, 67, .06);
+      --radius: 14px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 34%),
+        linear-gradient(180deg, #ffffff, var(--bg));
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    button,
+    input { font: inherit; }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .app-frame {
+      width: min(1480px, 100%);
+      margin: 0 auto 32px;
+      border: 1px solid rgba(218, 220, 224, .72);
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .tab-strip {
+      height: 48px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: end;
+      gap: 14px;
+      padding: 8px 12px 0;
+      background: var(--chrome);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 7px;
+      align-self: center;
+      padding-bottom: 6px;
+    }
+
+    .window-dots span {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--line-2);
+    }
+
+    .tabs {
+      display: flex;
+      align-items: end;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .chrome-tab {
+      height: 36px;
+      min-width: 154px;
+      max-width: 220px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      border-radius: 12px 12px 0 0;
+      color: var(--muted);
+      background: color-mix(in srgb, var(--chrome-2) 64%, transparent);
+      min-width: 0;
+    }
+
+    .chrome-tab.active {
+      color: var(--ink);
+      background: var(--panel);
+      box-shadow: 0 -1px 0 var(--panel), var(--soft-shadow);
+    }
+
+    .chrome-tab b {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 12px;
+    }
+
+    .tiny-fav {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      display: grid;
+      place-items: center;
+      background: var(--primary);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .toolbar-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      align-self: center;
+      padding-bottom: 6px;
+      color: var(--muted);
+    }
+
+    .toolbar-icons span {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: color-mix(in srgb, var(--panel) 68%, transparent);
+      border: 1px solid color-mix(in srgb, var(--line) 76%, transparent);
+      line-height: 1;
+    }
+
+    .omnibar {
+      height: 50px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 14px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-controls {
+      display: flex;
+      gap: 6px;
+      color: var(--muted);
+    }
+
+    .circle-btn,
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid transparent;
+    }
+
+    .circle-btn:hover,
+    .icon-btn:hover {
+      background: var(--panel-2);
+      border-color: var(--line);
+    }
+
+    .address {
+      height: 34px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 13px;
+      min-width: 0;
+      color: var(--muted);
+    }
+
+    .lock {
+      width: 15px;
+      height: 15px;
+      border-radius: 4px;
+      background: var(--success);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      flex: 0 0 auto;
+    }
+
+    .address span:last-child {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .extension-shell {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      align-items: start;
+      background: #f8fafc;
+      min-height: 780px;
+    }
+
+    .side-panel {
+      position: sticky;
+      top: 0;
+      max-height: calc(100vh - 24px);
+      overflow: auto;
+      background: var(--panel);
+      border-right: 1px solid rgba(218, 220, 224, .72);
+      padding: 18px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .extension-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: none;
+      font-weight: 850;
+    }
+
+    .logo-wrap b,
+    .logo-wrap span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .logo-wrap b {
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .logo-wrap span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .search {
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: #f1f3f4;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+    }
+
+    .search input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      min-width: 0;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .stat {
+      padding: 11px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 0;
+      min-width: 0;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--ink);
+      font-size: 19px;
+      line-height: 1;
+      font-weight: 680;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .section-label {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .group-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .group-item {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 12px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 16px;
+      background: transparent;
+      border: 1px solid transparent;
+      text-align: left;
+    }
+
+    .group-item.active {
+      background: color-mix(in srgb, var(--primary) 10%, #fff);
+      border-color: transparent;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 14%, transparent);
+    }
+
+    .dot.green { background: var(--success); box-shadow: 0 0 0 4px color-mix(in srgb, var(--success) 14%, transparent); }
+    .dot.warn { background: var(--warning); box-shadow: 0 0 0 4px color-mix(in srgb, var(--warning) 18%, transparent); }
+    .dot.dark { background: var(--ink); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ink) 10%, transparent); }
+
+    .group-text {
+      min-width: 0;
+    }
+
+    .group-text b,
+    .group-text span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .group-text b {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .group-text span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .pill {
+      min-height: 22px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      color: var(--muted);
+      background: #fff;
+      border: 1px solid rgba(218, 220, 224, .8);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .drop-help {
+      border: 1px dashed color-mix(in srgb, var(--primary) 28%, #cfd6df);
+      border-radius: 16px;
+      background: #f8fafc;
+      padding: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 12px;
+    }
+
+    .drop-help b {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .main {
+      min-width: 0;
+      padding: 20px;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .hero-bar {
+      border: 0;
+      background: color-mix(in srgb, var(--panel) 88%, transparent);
+      border-radius: 22px;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      box-shadow: var(--soft-shadow);
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 22px;
+      letter-spacing: 0;
+      line-height: 1.2;
+      font-weight: 680;
+    }
+
+    .subtitle {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .segmented {
+      height: 36px;
+      border: 0;
+      border-radius: 999px;
+      padding: 3px;
+      display: inline-flex;
+      gap: 3px;
+      background: #eef1f5;
+    }
+
+    .segmented button {
+      min-width: 58px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      padding: 0 12px;
+      font-weight: 700;
+    }
+
+    .segmented button.active {
+      color: #fff;
+      background: var(--primary);
+      box-shadow: 0 1px 2px color-mix(in srgb, var(--primary) 24%, transparent);
+    }
+
+    .text-btn,
+    .primary-btn {
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 0 13px;
+      border-radius: 999px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .text-btn {
+      background: var(--panel);
+      border: 1px solid rgba(218, 220, 224, .85);
+      color: var(--ink);
+    }
+
+    .primary-btn {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--primary) 20%, transparent);
+    }
+
+    .filter-row {
+      border: 0;
+      background: var(--panel);
+      border-radius: 22px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      height: 30px;
+      border-radius: 999px;
+      padding: 0 11px;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid transparent;
+      font-weight: 560;
+      white-space: nowrap;
+    }
+
+    .chip.active {
+      color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 10%, #fff);
+      border-color: transparent;
+    }
+
+    .sort-label {
+      color: var(--muted);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .surface {
+      border: 0;
+      border-radius: 22px;
+      background: var(--panel);
+      box-shadow: var(--soft-shadow);
+      overflow: hidden;
+    }
+
+    .surface-head {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(218, 220, 224, .64);
+      background: var(--panel);
+    }
+
+    .surface-head b {
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 650;
+    }
+
+    .surface-head span {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .card-board {
+      padding: 14px;
+      background: #f8fafc;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .lane {
+      border: 1px solid rgba(218, 220, 224, .68);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .78);
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .lane.target {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+    }
+
+    .lane-head {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 0 12px;
+      border-bottom: 1px solid rgba(218, 220, 224, .64);
+    }
+
+    .lane-title {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--ink);
+      font-weight: 650;
+    }
+
+    .lane-title span:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .cards {
+      padding: 10px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .tab-card {
+      background: var(--panel);
+      border: 1px solid transparent;
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+      box-shadow: 0 1px 2px rgba(60, 64, 67, .08);
+    }
+
+    .tab-card.active-tab {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent), 0 1px 2px rgba(60, 64, 67, .08);
+    }
+
+    .tab-card.dragging {
+      transform: rotate(-1deg);
+      border-color: var(--primary);
+      box-shadow: 0 16px 34px rgba(60, 64, 67, .16);
+    }
+
+    .tab-main {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .favicon {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--primary);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .favicon.green { background: var(--success); }
+    .favicon.warn { background: var(--warning); color: var(--ink); }
+    .favicon.dark { background: var(--ink); }
+    .favicon.red { background: var(--danger); }
+
+    .tab-text {
+      min-width: 0;
+    }
+
+    .tab-title,
+    .tab-url {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tab-title {
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 650;
+      line-height: 1.25;
+    }
+
+    .tab-url {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 5px;
+    }
+
+    .card-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--panel-2);
+      border: 0;
+      color: var(--muted);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .card-icon.saved {
+      background: var(--warning-soft);
+      color: color-mix(in srgb, var(--warning) 70%, var(--ink));
+      border-color: transparent;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      min-height: 22px;
+      border-radius: 999px;
+      padding: 3px 8px;
+      display: inline-flex;
+      align-items: center;
+      border: 0;
+      font-size: 11px;
+      font-weight: 560;
+      white-space: nowrap;
+    }
+
+    .badge.active {
+      color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 10%, #fff);
+    }
+
+    .badge.close {
+      color: var(--danger);
+      background: color-mix(in srgb, var(--danger) 10%, #fff);
+    }
+
+    .badge.dup {
+      color: color-mix(in srgb, var(--warning) 76%, var(--ink));
+      background: color-mix(in srgb, var(--warning) 14%, #fff);
+    }
+
+    .badge.group {
+      color: var(--ink);
+      background: #f1f3f4;
+    }
+
+    .metrics {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .metric {
+      min-width: 0;
+      border-radius: 0;
+      border: 0;
+      background: transparent;
+      padding: 0;
+    }
+
+    .metric span {
+      display: inline;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .metric span::after {
+      content: " ";
+    }
+
+    .metric b {
+      display: inline;
+      margin-top: 0;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 620;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .bar {
+      width: 86px;
+      height: 6px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--line) 72%, var(--panel));
+      overflow: hidden;
+    }
+
+    .bar i {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--success);
+    }
+
+    .bar.warn i { background: var(--warning); }
+    .bar.hot i { background: var(--danger); }
+
+    .drop-card {
+      min-height: 96px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-radius: 16px;
+      border: 1px dashed color-mix(in srgb, var(--primary) 24%, #cfd6df);
+      color: var(--muted);
+      background: #f8fafc;
+      padding: 12px;
+      line-height: 1.45;
+    }
+
+    .compact-grid {
+      padding: 14px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(170px, 1fr));
+      gap: 10px;
+      background: var(--panel-2);
+    }
+
+    .compact-card {
+      min-width: 0;
+      border: 0;
+      border-radius: 16px;
+      background: var(--panel);
+      padding: 10px;
+      display: grid;
+      gap: 9px;
+      box-shadow: 0 1px 2px rgba(60, 64, 67, .08);
+    }
+
+    .compact-top {
+      display: grid;
+      grid-template-columns: 26px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .compact-top .favicon {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      font-size: 11px;
+    }
+
+    .mini-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .mini-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      background: var(--panel);
+    }
+
+    table {
+      width: 100%;
+      min-width: 860px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 11px 14px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th {
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    td {
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .title-cell {
+      min-width: 260px;
+      max-width: 360px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .title-cell .favicon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      font-size: 12px;
+      flex: 0 0 auto;
+    }
+
+    .ellipsis {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
+    }
+
+    .palette-panel {
+      border: 0;
+      border-radius: 22px;
+      background: var(--panel);
+      box-shadow: var(--soft-shadow);
+      overflow: hidden;
+    }
+
+    .palette-grid {
+      padding: 14px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(210px, 1fr));
+      gap: 12px;
+      background: #f8fafc;
+    }
+
+    .palette {
+      border: 1px solid transparent;
+      border-radius: 16px;
+      background: var(--panel);
+      padding: 11px;
+      display: grid;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .palette.selected {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent);
+    }
+
+    .palette-name {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 850;
+    }
+
+    .palette-name span {
+      color: var(--primary);
+      font-size: 11px;
+    }
+
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+    }
+
+    .swatch {
+      height: 28px;
+      border-radius: 7px;
+      border: 1px solid rgba(0, 0, 0, .08);
+    }
+
+    .palette-note {
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 1120px) {
+      .extension-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        position: static;
+        max-height: none;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        justify-content: flex-start;
+      }
+
+      .card-board,
+      .compact-grid,
+      .palette-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 0;
+      }
+
+      .app-frame {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        margin: 0;
+      }
+
+      .filter-row {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .main {
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="app-frame" aria-label="Chrome Material 风格的 Tab Cards 静态原型">
+      <div class="extension-shell">
+        <aside class="side-panel">
+          <div class="extension-title">
+            <div class="logo-wrap">
+              <div class="logo">T</div>
+              <div>
+                <b>Tab Cards</b>
+                <span>18 tabs · Window A</span>
+              </div>
+            </div>
+            <button class="icon-btn" aria-label="设置">⚙</button>
+          </div>
+
+          <label class="search">
+            <span aria-hidden="true">⌕</span>
+            <input type="search" placeholder="搜索标题、域名或标签组" />
+          </label>
+
+          <div class="stats">
+            <div class="stat"><strong>2.84GB</strong><span>总内存</span></div>
+            <div class="stat"><strong>5</strong><span>建议关闭</span></div>
+            <div class="stat"><strong>3</strong><span>重复 Tab</span></div>
+            <div class="stat"><strong>4</strong><span>标签组</span></div>
+          </div>
+
+          <div class="section-label"><span>Tab Groups</span><button class="pill">+</button></div>
+
+          <nav class="group-list" aria-label="标签组列表">
+            <button class="group-item active">
+              <span class="dot"></span>
+              <span class="group-text"><b>全部标签</b><span>按健康度排序</span></span>
+              <span class="pill">18</span>
+            </button>
+            <button class="group-item">
+              <span class="dot green"></span>
+              <span class="group-text"><b>工作流</b><span>文档、代码、任务</span></span>
+              <span class="pill">7</span>
+            </button>
+            <button class="group-item">
+              <span class="dot warn"></span>
+              <span class="group-text"><b>阅读稍后处理</b><span>文章、视频资料</span></span>
+              <span class="pill">6</span>
+            </button>
+            <button class="group-item">
+              <span class="dot dark"></span>
+              <span class="group-text"><b>未分组</b><span>可拖拽归档</span></span>
+              <span class="pill">5</span>
+            </button>
+          </nav>
+
+          <div class="drop-help">
+            <b>拖拽分组预览</b>
+            将卡片拖到左侧分组或主区域分组列，释放后修改分组；拖到空白投放区可新建组。
+          </div>
+        </aside>
+
+        <section class="main">
+          <header class="hero-bar">
+            <div>
+              <h1>Chrome Tabs Control Center</h1>
+              <div class="subtitle">借鉴 Chrome/Material 的轻量层级、胶囊控件和状态 chip，支持布局和配色即时切换。</div>
+            </div>
+            <div class="controls">
+              <div class="segmented" aria-label="布局切换">
+                <button class="active" data-mode="card">卡片</button>
+                <button data-mode="compact">紧凑</button>
+                <button data-mode="list">列表</button>
+              </div>
+              <button class="text-btn">刷新</button>
+              <button class="primary-btn">新建组</button>
+            </div>
+          </header>
+
+          <div class="filter-row">
+            <div class="chips">
+              <button class="chip active">全部 18</button>
+              <button class="chip">Active 1</button>
+              <button class="chip">推荐关闭 5</button>
+              <button class="chip">重复 Tab 3</button>
+              <button class="chip">已收藏 4</button>
+              <button class="chip">高内存 6</button>
+            </div>
+            <div class="sort-label"><span>排序</span><span class="pill">内存占用 · 高到低</span></div>
+          </div>
+
+          <section class="view active" data-view="card">
+            <div class="surface">
+              <div class="surface-head">
+                <b>卡片模式</b>
+                <span>适合清理、收藏和拖拽分组</span>
+              </div>
+              <div class="card-board">
+                <div class="lane">
+                  <div class="lane-head">
+                    <div class="lane-title"><span class="dot green"></span><span>工作流</span></div>
+                    <span class="pill">7 · 1.2GB</span>
+                  </div>
+                  <div class="cards">
+                    <article class="tab-card active-tab">
+                      <div class="tab-main">
+                        <div class="favicon green">D</div>
+                        <div class="tab-text">
+                          <div class="tab-title">Product Requirements - Tab Card Manager</div>
+                          <div class="tab-url">docs.google.com/document/d/req-tab-manager</div>
+                        </div>
+                        <div class="actions"><button class="card-icon saved">★</button><button class="card-icon">×</button></div>
+                      </div>
+                      <div class="tag-row"><span class="badge active">Active</span><span class="badge group">工作流</span></div>
+                      <div class="metrics"><div class="metric"><span>Tab 内存</span><b>412 MB</b></div><div class="metric"><span>打开时长</span><b>2h 18m</b></div></div>
+                      <div class="card-foot"><span>当前正在查看</span><span class="bar warn"><i style="width:68%"></i></span></div>
+                    </article>
+
+                    <article class="tab-card dragging">
+                      <div class="tab-main">
+                        <div class="favicon">C</div>
+                        <div class="tab-text">
+                          <div class="tab-title">Chat · 组件交互方案讨论</div>
+                          <div class="tab-url">chat.openai.com/c/tab-card-ui</div>
+                        </div>
+                        <div class="actions"><button class="card-icon">⋮</button><button class="card-icon">×</button></div>
+                      </div>
+                      <div class="tag-row"><span class="badge group">拖拽中</span></div>
+                      <div class="metrics"><div class="metric"><span>Tab 内存</span><b>286 MB</b></div><div class="metric"><span>打开时长</span><b>1h 03m</b></div></div>
+                      <div class="card-foot"><span>移动到新组</span><span class="bar warn"><i style="width:51%"></i></span></div>
+                    </article>
+                  </div>
+                </div>
+
+                <div class="lane target">
+                  <div class="lane-head">
+                    <div class="lane-title"><span class="dot warn"></span><span>阅读稍后处理</span></div>
+                    <span class="pill">6 · 940MB</span>
+                  </div>
+                  <div class="cards">
+                    <article class="tab-card">
+                      <div class="tab-main">
+                        <div class="favicon red">Y</div>
+                        <div class="tab-text">
+                          <div class="tab-title">Chrome Extension UX Patterns</div>
+                          <div class="tab-url">youtube.com/watch?v=extension-ux</div>
+                        </div>
+                        <div class="actions"><button class="card-icon saved">★</button><button class="card-icon">×</button></div>
+                      </div>
+                      <div class="tag-row"><span class="badge close">推荐关闭</span><span class="badge group">阅读</span></div>
+                      <div class="metrics"><div class="metric"><span>Tab 内存</span><b>624 MB</b></div><div class="metric"><span>打开时长</span><b>7h 12m</b></div></div>
+                      <div class="card-foot"><span>高内存后台</span><span class="bar hot"><i style="width:92%"></i></span></div>
+                    </article>
+                    <div class="drop-card">拖入此列修改标签组</div>
+                  </div>
+                </div>
+
+                <div class="lane">
+                  <div class="lane-head">
+                    <div class="lane-title"><span class="dot dark"></span><span>未分组</span></div>
+                    <span class="pill">5 · 680MB</span>
+                  </div>
+                  <div class="cards">
+                    <article class="tab-card">
+                      <div class="tab-main">
+                        <div class="favicon warn">A</div>
+                        <div class="tab-text">
+                          <div class="tab-title">Amazon · USB-C Hub</div>
+                          <div class="tab-url">amazon.com/product/usb-c-hub</div>
+                        </div>
+                        <div class="actions"><button class="card-icon">☆</button><button class="card-icon">×</button></div>
+                      </div>
+                      <div class="tag-row"><span class="badge dup">重复 Tab</span><span class="badge close">推荐关闭</span></div>
+                      <div class="metrics"><div class="metric"><span>Tab 内存</span><b>248 MB</b></div><div class="metric"><span>打开时长</span><b>1d 4h</b></div></div>
+                      <div class="card-foot"><span>重复购物页</span><span class="bar warn"><i style="width:47%"></i></span></div>
+                    </article>
+                    <div class="drop-card">新建组投放区</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="view" data-view="compact">
+            <div class="surface">
+              <div class="surface-head">
+                <b>紧凑模式</b>
+                <span>适合快速扫描大量标签</span>
+              </div>
+              <div class="compact-grid">
+                <div class="compact-card"><div class="compact-top"><div class="favicon green">D</div><div class="mini-title">PRD · Tab Manager</div><button class="card-icon saved">★</button></div><div class="mini-row"><span>412MB · 2h18m</span><span class="badge active">Active</span></div></div>
+                <div class="compact-card"><div class="compact-top"><div class="favicon red">Y</div><div class="mini-title">Extension UX Patterns</div><button class="card-icon">×</button></div><div class="mini-row"><span>624MB · 7h12m</span><span class="badge close">Close</span></div></div>
+                <div class="compact-card"><div class="compact-top"><div class="favicon">M</div><div class="mini-title">MDN chrome.tabs API</div><button class="card-icon">☆</button></div><div class="mini-row"><span>156MB · 3h26m</span><span class="badge dup">重复</span></div></div>
+                <div class="compact-card"><div class="compact-top"><div class="favicon dark">G</div><div class="mini-title">GitHub Issues</div><button class="card-icon">×</button></div><div class="mini-row"><span>198MB · 45m</span><span class="badge group">工作流</span></div></div>
+                <div class="compact-card"><div class="compact-top"><div class="favicon">C</div><div class="mini-title">Chat 交互方案</div><button class="card-icon">⋮</button></div><div class="mini-row"><span>286MB · 1h03m</span><span class="badge group">拖拽</span></div></div>
+                <div class="compact-card"><div class="compact-top"><div class="favicon warn">A</div><div class="mini-title">Amazon USB-C Hub</div><button class="card-icon">×</button></div><div class="mini-row"><span>248MB · 1d4h</span><span class="badge close">Close</span></div></div>
+                <div class="compact-card"><div class="compact-top"><div class="favicon red">M</div><div class="mini-title">Mail 客户反馈</div><button class="card-icon">☆</button></div><div class="mini-row"><span>332MB · 9h41m</span><span class="badge close">Close</span></div></div>
+                <div class="compact-card"><div class="compact-top"><div class="favicon green">N</div><div class="mini-title">Notion Sprint Board</div><button class="card-icon saved">★</button></div><div class="mini-row"><span>221MB · 5h02m</span><span class="badge group">工作流</span></div></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="view" data-view="list">
+            <div class="surface">
+              <div class="surface-head">
+                <b>列表模式</b>
+                <span>适合排序、批量审查和关闭</span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Tab</th><th>链接</th><th>分组</th><th>内存</th><th>时长</th><th>状态</th><th>操作</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><div class="title-cell"><div class="favicon green">D</div><div class="ellipsis">Product Requirements - Tab Card Manager</div></div></td><td class="ellipsis">docs.google.com/document/d/req-tab-manager</td><td>工作流</td><td>412 MB</td><td>2h 18m</td><td><span class="badge active">Active</span></td><td><button class="card-icon saved">★</button></td></tr>
+                    <tr><td><div class="title-cell"><div class="favicon red">Y</div><div class="ellipsis">Chrome Extension UX Patterns</div></div></td><td class="ellipsis">youtube.com/watch?v=extension-ux</td><td>阅读</td><td>624 MB</td><td>7h 12m</td><td><span class="badge close">推荐关闭</span></td><td><button class="card-icon">×</button></td></tr>
+                    <tr><td><div class="title-cell"><div class="favicon">M</div><div class="ellipsis">MDN · chrome.tabs API</div></div></td><td class="ellipsis">developer.mozilla.org/docs/WebExtensions/API/tabs</td><td>阅读</td><td>156 MB</td><td>3h 26m</td><td><span class="badge dup">重复 Tab</span></td><td><button class="card-icon">☆</button></td></tr>
+                    <tr><td><div class="title-cell"><div class="favicon warn">A</div><div class="ellipsis">Amazon · USB-C Hub</div></div></td><td class="ellipsis">amazon.com/product/usb-c-hub</td><td>未分组</td><td>248 MB</td><td>1d 4h</td><td><span class="badge close">推荐关闭</span></td><td><button class="card-icon">×</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="palette-panel">
+            <div class="surface-head">
+              <b>9 种配色方案</b>
+              <span>当前预览使用 01 Ocean Depth，点击任意方案可即时换肤</span>
+            </div>
+            <div class="palette-grid">
+              <button class="palette selected" type="button">
+                <div class="palette-name">01 Ocean Depth <span>当前</span></div>
+                <div class="swatches"><span class="swatch" style="background:#03045e"></span><span class="swatch" style="background:#0077b6"></span><span class="swatch" style="background:#00b4d8"></span><span class="swatch" style="background:#90e0ef"></span><span class="swatch" style="background:#caf0f8"></span></div>
+                <div class="palette-note">深海蓝科技感，适合默认 Chrome 风格。</div>
+              </button>
+              <button class="palette" type="button">
+                <div class="palette-name">02 Signal Amber <span>明快</span></div>
+                <div class="swatches"><span class="swatch" style="background:#8ecae6"></span><span class="swatch" style="background:#219ebc"></span><span class="swatch" style="background:#023047"></span><span class="swatch" style="background:#ffb703"></span><span class="swatch" style="background:#fb8500"></span></div>
+                <div class="palette-note">蓝橙对比更强，适合突出清理建议。</div>
+              </button>
+              <button class="palette" type="button">
+                <div class="palette-name">03 Clear Azure <span>清爽</span></div>
+                <div class="swatches"><span class="swatch" style="background:#03256c"></span><span class="swatch" style="background:#2541b2"></span><span class="swatch" style="background:#1768ac"></span><span class="swatch" style="background:#06bee1"></span><span class="swatch" style="background:#ffffff"></span></div>
+                <div class="palette-note">高亮蓝更利落，适合干净的效率工具。</div>
+              </button>
+              <button class="palette" type="button">
+                <div class="palette-name">04 Sage Sunset <span>温和</span></div>
+                <div class="swatches"><span class="swatch" style="background:#264653"></span><span class="swatch" style="background:#2a9d8f"></span><span class="swatch" style="background:#e9c46a"></span><span class="swatch" style="background:#f4a261"></span><span class="swatch" style="background:#e76f51"></span></div>
+                <div class="palette-note">青绿与暖橙平衡，适合柔和的生产力工具。</div>
+              </button>
+              <button class="palette" type="button">
+                <div class="palette-name">05 Railway Signal <span>醒目</span></div>
+                <div class="swatches"><span class="swatch" style="background:#003049"></span><span class="swatch" style="background:#d62828"></span><span class="swatch" style="background:#f77f00"></span><span class="swatch" style="background:#fcbf49"></span><span class="swatch" style="background:#eae2b7"></span></div>
+                <div class="palette-note">深蓝红橙对比强，适合突出风险和关闭动作。</div>
+              </button>
+              <button class="palette" type="button">
+                <div class="palette-name">06 Neon Spectrum <span>活力</span></div>
+                <div class="swatches"><span class="swatch" style="background:#ffbe0b"></span><span class="swatch" style="background:#fb5607"></span><span class="swatch" style="background:#ff006e"></span><span class="swatch" style="background:#8338ec"></span><span class="swatch" style="background:#3a86ff"></span></div>
+                <div class="palette-note">高饱和实验方案，更适合年轻化工具风格。</div>
+              </button>
+              <button class="palette" type="button">
+                <div class="palette-name">07 Soft Rose <span>柔和</span></div>
+                <div class="swatches"><span class="swatch" style="background:#d8e2dc"></span><span class="swatch" style="background:#ffe5d9"></span><span class="swatch" style="background:#ffcad4"></span><span class="swatch" style="background:#f4acb7"></span><span class="swatch" style="background:#9d8189"></span></div>
+                <div class="palette-note">低对比浅色方案，适合安静、轻量的侧边栏。</div>
+              </button>
+              <button class="palette" type="button">
+                <div class="palette-name">08 Canyon Night <span>沉稳</span></div>
+                <div class="swatches"><span class="swatch" style="background:#5f0f40"></span><span class="swatch" style="background:#9a031e"></span><span class="swatch" style="background:#fb8b24"></span><span class="swatch" style="background:#e36414"></span><span class="swatch" style="background:#0f4c5c"></span></div>
+                <div class="palette-note">酒红与深青组合，适合更成熟的视觉方向。</div>
+              </button>
+              <button class="palette" type="button">
+                <div class="palette-name">09 Cream Fruit <span>背景</span></div>
+                <div class="swatches"><span class="swatch" style="background:#fff4d6"></span><span class="swatch" style="background:#ff9f1c"></span><span class="swatch" style="background:#d90429"></span><span class="swatch" style="background:#b7d968"></span><span class="swatch" style="background:#31572c"></span></div>
+                <div class="palette-note">来自新标签页水果插画：奶油底、柑橘、青柠和西瓜红。</div>
+              </button>
+            </div>
+          </section>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const themes = [
+      {
+        name: "01 Ocean Depth",
+        vars: {
+          "--bg": "#eef9fc",
+          "--chrome": "#e7f6fb",
+          "--chrome-2": "#d9f1f8",
+          "--panel": "#ffffff",
+          "--panel-2": "#f6fbfd",
+          "--ink": "#03045e",
+          "--text": "#17203a",
+          "--muted": "#607087",
+          "--subtle": "#8a98aa",
+          "--line": "#c8e2eb",
+          "--line-2": "#9fd6e5",
+          "--primary": "#0077b6",
+          "--primary-soft": "#caf0f8",
+          "--accent": "#00b4d8",
+          "--success": "#008f9f",
+          "--success-soft": "#dbf7fb",
+          "--warning": "#00b4d8",
+          "--warning-soft": "#e2f9fd",
+          "--danger": "#d94b5f",
+          "--danger-soft": "#ffe9ed",
+          "--shadow": "0 24px 64px rgba(3, 4, 94, .16)",
+          "--soft-shadow": "0 3px 12px rgba(3, 4, 94, .08)"
+        }
+      },
+      {
+        name: "02 Signal Amber",
+        vars: {
+          "--bg": "#f2f9fc",
+          "--chrome": "#e4f2f8",
+          "--chrome-2": "#d4edf6",
+          "--panel": "#ffffff",
+          "--panel-2": "#f7fbfd",
+          "--ink": "#023047",
+          "--text": "#1b2c38",
+          "--muted": "#5d7180",
+          "--subtle": "#8796a1",
+          "--line": "#c9dfe9",
+          "--line-2": "#8ecae6",
+          "--primary": "#219ebc",
+          "--primary-soft": "#dff3fa",
+          "--accent": "#ffb703",
+          "--success": "#16876c",
+          "--success-soft": "#e6f6ef",
+          "--warning": "#ffb703",
+          "--warning-soft": "#fff3cc",
+          "--danger": "#fb8500",
+          "--danger-soft": "#ffead3",
+          "--shadow": "0 24px 64px rgba(2, 48, 71, .16)",
+          "--soft-shadow": "0 3px 12px rgba(2, 48, 71, .08)"
+        }
+      },
+      {
+        name: "03 Clear Azure",
+        vars: {
+          "--bg": "#f4fbff",
+          "--chrome": "#edf7fc",
+          "--chrome-2": "#dcedf8",
+          "--panel": "#ffffff",
+          "--panel-2": "#f8fdff",
+          "--ink": "#03256c",
+          "--text": "#18233f",
+          "--muted": "#60748e",
+          "--subtle": "#8797aa",
+          "--line": "#cfe4ef",
+          "--line-2": "#9ed9ea",
+          "--primary": "#2541b2",
+          "--primary-soft": "#e8eeff",
+          "--accent": "#06bee1",
+          "--success": "#1768ac",
+          "--success-soft": "#e6f1fa",
+          "--warning": "#06bee1",
+          "--warning-soft": "#ddf9fd",
+          "--danger": "#d8455c",
+          "--danger-soft": "#ffe8ed",
+          "--shadow": "0 24px 64px rgba(3, 37, 108, .15)",
+          "--soft-shadow": "0 3px 12px rgba(3, 37, 108, .08)"
+        }
+      },
+      {
+        name: "04 Sage Sunset",
+        vars: {
+          "--bg": "#f8f3ea",
+          "--chrome": "#f3eadb",
+          "--chrome-2": "#eadfce",
+          "--panel": "#ffffff",
+          "--panel-2": "#fbf7ef",
+          "--ink": "#264653",
+          "--text": "#26353c",
+          "--muted": "#66777e",
+          "--subtle": "#8b999e",
+          "--line": "#e1d4bd",
+          "--line-2": "#e9c46a",
+          "--primary": "#2a9d8f",
+          "--primary-soft": "#e4f5f2",
+          "--accent": "#e9c46a",
+          "--success": "#2a9d8f",
+          "--success-soft": "#e4f5f2",
+          "--warning": "#f4a261",
+          "--warning-soft": "#fff0df",
+          "--danger": "#e76f51",
+          "--danger-soft": "#fde8e1",
+          "--shadow": "0 24px 64px rgba(38, 70, 83, .15)",
+          "--soft-shadow": "0 3px 12px rgba(38, 70, 83, .08)"
+        }
+      },
+      {
+        name: "05 Railway Signal",
+        vars: {
+          "--bg": "#f8f1dc",
+          "--chrome": "#f2e9cf",
+          "--chrome-2": "#eadfbf",
+          "--panel": "#ffffff",
+          "--panel-2": "#fcf8ec",
+          "--ink": "#003049",
+          "--text": "#1d2d36",
+          "--muted": "#65737a",
+          "--subtle": "#8c989d",
+          "--line": "#e4d8af",
+          "--line-2": "#fcbf49",
+          "--primary": "#003049",
+          "--primary-soft": "#e5edf1",
+          "--accent": "#f77f00",
+          "--success": "#3a7d62",
+          "--success-soft": "#e7f4ee",
+          "--warning": "#f77f00",
+          "--warning-soft": "#fff0d7",
+          "--danger": "#d62828",
+          "--danger-soft": "#fde5e5",
+          "--shadow": "0 24px 64px rgba(0, 48, 73, .16)",
+          "--soft-shadow": "0 3px 12px rgba(0, 48, 73, .08)"
+        }
+      },
+      {
+        name: "06 Neon Spectrum",
+        vars: {
+          "--bg": "#f7f3ff",
+          "--chrome": "#f0e9ff",
+          "--chrome-2": "#eadfff",
+          "--panel": "#ffffff",
+          "--panel-2": "#fbf8ff",
+          "--ink": "#2e1a58",
+          "--text": "#241d33",
+          "--muted": "#6f657e",
+          "--subtle": "#948ba2",
+          "--line": "#e0d2f5",
+          "--line-2": "#c4a7f6",
+          "--primary": "#3a86ff",
+          "--primary-soft": "#e7f0ff",
+          "--accent": "#8338ec",
+          "--success": "#3a86ff",
+          "--success-soft": "#e7f0ff",
+          "--warning": "#ffbe0b",
+          "--warning-soft": "#fff4cc",
+          "--danger": "#ff006e",
+          "--danger-soft": "#ffe1ef",
+          "--shadow": "0 24px 64px rgba(58, 19, 118, .15)",
+          "--soft-shadow": "0 3px 12px rgba(58, 19, 118, .08)"
+        }
+      },
+      {
+        name: "07 Soft Rose",
+        vars: {
+          "--bg": "#fbf4f3",
+          "--chrome": "#f8ecec",
+          "--chrome-2": "#f4e2e4",
+          "--panel": "#ffffff",
+          "--panel-2": "#fff8f7",
+          "--ink": "#6f5961",
+          "--text": "#3d3337",
+          "--muted": "#7c6f74",
+          "--subtle": "#a09398",
+          "--line": "#ead4d7",
+          "--line-2": "#f4acb7",
+          "--primary": "#9d8189",
+          "--primary-soft": "#f1e8eb",
+          "--accent": "#ffcad4",
+          "--success": "#7d9a8a",
+          "--success-soft": "#edf4f0",
+          "--warning": "#f4acb7",
+          "--warning-soft": "#fff0f3",
+          "--danger": "#c86b7c",
+          "--danger-soft": "#fde7ec",
+          "--shadow": "0 24px 64px rgba(117, 88, 98, .14)",
+          "--soft-shadow": "0 3px 12px rgba(117, 88, 98, .08)"
+        }
+      },
+      {
+        name: "08 Canyon Night",
+        vars: {
+          "--bg": "#fbf0e6",
+          "--chrome": "#f3e1d5",
+          "--chrome-2": "#ead2c2",
+          "--panel": "#ffffff",
+          "--panel-2": "#fff8f2",
+          "--ink": "#5f0f40",
+          "--text": "#2d1d2a",
+          "--muted": "#705f68",
+          "--subtle": "#968891",
+          "--line": "#e6c8b4",
+          "--line-2": "#fb8b24",
+          "--primary": "#0f4c5c",
+          "--primary-soft": "#e3eff2",
+          "--accent": "#fb8b24",
+          "--success": "#0f4c5c",
+          "--success-soft": "#e3eff2",
+          "--warning": "#e36414",
+          "--warning-soft": "#ffe8d7",
+          "--danger": "#9a031e",
+          "--danger-soft": "#f8e2e7",
+          "--shadow": "0 24px 64px rgba(95, 15, 64, .15)",
+          "--soft-shadow": "0 3px 12px rgba(95, 15, 64, .08)"
+        }
+      },
+      {
+        name: "09 Cream Fruit",
+        useWarmBase: true,
+        vars: {
+          "--bg": "#fff6dd",
+          "--chrome": "#fff1cf",
+          "--chrome-2": "#f5e4bb",
+          "--panel": "#fffdf8",
+          "--panel-2": "#fff9e9",
+          "--ink": "#26321f",
+          "--text": "#2f3529",
+          "--muted": "#707465",
+          "--subtle": "#9da08f",
+          "--line": "#eee0bd",
+          "--line-2": "#e8c77a",
+          "--primary": "#ff9f1c",
+          "--primary-soft": "#fff0cf",
+          "--accent": "#b7d968",
+          "--success": "#6a994e",
+          "--success-soft": "#eff7df",
+          "--warning": "#ffb703",
+          "--warning-soft": "#fff2cf",
+          "--danger": "#d90429",
+          "--danger-soft": "#ffe4e9",
+          "--shadow": "0 20px 56px rgba(92, 72, 25, .12)",
+          "--soft-shadow": "0 1px 3px rgba(92, 72, 25, .08), 0 8px 24px rgba(92, 72, 25, .06)"
+        }
+      }
+    ];
+
+    const root = document.documentElement;
+    const modeButtons = document.querySelectorAll("[data-mode]");
+    const views = document.querySelectorAll("[data-view]");
+    const chips = document.querySelectorAll(".chip");
+    const palettes = document.querySelectorAll(".palette");
+    const paletteHeader = document.querySelector(".palette-panel .surface-head span");
+    const neutralTokens = {
+      "--bg": "#f5f7fb",
+      "--chrome": "#f1f3f4",
+      "--chrome-2": "#e8eaed",
+      "--panel": "#ffffff",
+      "--panel-2": "#f8fafc",
+      "--ink": "#202124",
+      "--text": "#2f3642",
+      "--muted": "#687385",
+      "--subtle": "#9aa0a6",
+      "--line": "#e5e8ef",
+      "--line-2": "#d2d8e2",
+      "--shadow": "0 20px 56px rgba(60, 64, 67, .12)",
+      "--soft-shadow": "0 1px 3px rgba(60, 64, 67, .08), 0 8px 24px rgba(60, 64, 67, .06)"
+    };
+
+    function setMode(mode) {
+      modeButtons.forEach(button => button.classList.toggle("active", button.dataset.mode === mode));
+      views.forEach(view => view.classList.toggle("active", view.dataset.view === mode));
+    }
+
+    function setTheme(index) {
+      const theme = themes[index];
+      Object.entries(theme.vars).forEach(([key, value]) => root.style.setProperty(key, value));
+      if (!theme.useWarmBase) {
+        Object.entries(neutralTokens).forEach(([key, value]) => root.style.setProperty(key, value));
+      }
+      palettes.forEach((palette, paletteIndex) => {
+        const selected = paletteIndex === index;
+        palette.classList.toggle("selected", selected);
+        palette.setAttribute("aria-pressed", String(selected));
+        const status = palette.querySelector(".palette-name span");
+        if (status) status.textContent = selected ? "当前" : status.dataset.label;
+      });
+      paletteHeader.textContent = `当前预览使用 ${theme.name}，点击任意方案可即时换肤`;
+    }
+
+    modeButtons.forEach(button => button.addEventListener("click", () => setMode(button.dataset.mode)));
+    chips.forEach(chip => chip.addEventListener("click", () => {
+      chips.forEach(item => item.classList.remove("active"));
+      chip.classList.add("active");
+    }));
+    palettes.forEach((palette, index) => {
+      palette.setAttribute("aria-pressed", String(palette.classList.contains("selected")));
+      const status = palette.querySelector(".palette-name span");
+      if (status) status.dataset.label = status.textContent;
+      palette.addEventListener("click", () => setTheme(index));
+    });
+
+    setMode("card");
+    setTheme(0);
+  </script>
+</body>
+</html>

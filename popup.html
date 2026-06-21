@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fruit Tab Cards</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <main class="page">
+    <div class="fruit-field" aria-hidden="true">
+      <div class="fruit orange-slice"></div>
+      <div class="fruit watermelon"></div>
+      <div class="fruit kiwi"></div>
+      <div class="fruit lime"></div>
+      <div class="fruit berry"></div>
+      <div class="fruit sprinkle-bar"></div>
+    </div>
+
+    <section class="app" aria-label="Fruit Tab Cards">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-main">
+            <div class="brand-logo">T</div>
+            <div>
+              <b>Tab Cards</b>
+              <span id="windowLabel">加载中...</span>
+            </div>
+          </div>
+          <div class="brand-actions">
+            <button class="icon-button" id="sidebarToggleBtn" title="收起侧栏" aria-label="收起侧栏" aria-expanded="true"><span class="svg-icon icon-direction-left" aria-hidden="true"></span></button>
+            <button class="icon-button" id="refreshBtn" title="刷新" aria-label="刷新"><span class="svg-icon icon-refresh" aria-hidden="true"></span></button>
+          </div>
+        </div>
+
+        <label class="search">
+          <span class="svg-icon icon-search search-icon" aria-hidden="true"></span>
+          <input id="searchInput" type="search" placeholder="搜索标题、域名或标签组" />
+        </label>
+
+        <div class="stats">
+          <div class="stat"><strong id="totalMemory">--</strong><span>总内存</span></div>
+          <div class="stat"><strong id="closeCount">0</strong><span>建议关闭</span></div>
+          <div class="stat"><strong id="duplicateCount">0</strong><span>重复 Tab</span></div>
+          <div class="stat"><strong id="groupCount">0</strong><span>标签组</span></div>
+        </div>
+
+        <div class="section-title"><span>Tab Groups</span><button class="pill" id="newGroupBtn" title="新建分组" aria-label="新建分组"><span class="svg-icon icon-add" aria-hidden="true"></span></button></div>
+        <div class="group-list" id="groupList"></div>
+
+        <div class="drop-help" id="newGroupDrop">
+          <b>拖到这里新建组</b>
+          拖入 Tab 创建
+        </div>
+
+        <button class="closed-entry" id="closedTabsBtn" type="button" title="查看已关闭标签" aria-label="查看已关闭标签">
+          <span class="svg-icon icon-trash" aria-hidden="true"></span>
+          <span class="closed-label">回收站</span>
+          <span class="pill closed-count" id="closedCount">0</span>
+        </button>
+      </aside>
+
+      <section class="main">
+        <div class="hero">
+          <div class="hero-content">
+            <h1>卡片式 Tab 管理</h1>
+            <p class="subtitle">查看每个标签页的内存、打开时长、收藏、重复状态和关闭建议。拖拽卡片即可整理标签组。</p>
+          </div>
+          <div class="controls">
+            <div class="segmented" aria-label="视图切换">
+              <button class="active" data-view="board">卡片</button>
+              <button data-view="compact">紧凑</button>
+            </div>
+            <button class="text-btn" id="closeRecommendedBtn">关闭建议项</button>
+          </div>
+        </div>
+
+        <div class="filter-row">
+          <div class="chips" id="filters">
+            <button class="chip active" data-filter="all">全部</button>
+            <button class="chip" data-filter="active">Active</button>
+            <button class="chip" data-filter="recommended">建议关闭</button>
+            <button class="chip" data-filter="duplicate">重复</button>
+            <button class="chip" data-filter="bookmarked">已收藏</button>
+          </div>
+        </div>
+
+        <section class="surface view active" id="boardView">
+          <div class="surface-head">
+            <b>Tab Board</b>
+            <span>拖拽卡片可新建组或移动到已有组</span>
+          </div>
+          <div class="card-board" id="cardBoard"></div>
+        </section>
+
+        <section class="surface view" id="compactView">
+          <div class="surface-head">
+            <b>Compact Cards</b>
+            <span>快速浏览所有标签</span>
+          </div>
+          <div class="compact-grid" id="compactGrid"></div>
+        </section>
+
+        <section class="surface view" id="closedView">
+          <div class="surface-head">
+            <b>回收站</b>
+            <span>这里保留通过插件关闭的标签</span>
+          </div>
+          <div class="closed-grid" id="closedGrid"></div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>

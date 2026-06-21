@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Fruit Tab Cards",
+  "description": "以水果卡片视图管理 Chrome 标签页、标签组、重复标签和建议关闭项。",
+  "version": "1.0.0",
+  "action": {
+    "default_title": "Fruit Tab Cards"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabs",
+    "tabGroups",
+    "storage",
+    "bookmarks",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ]
+}
